@@ -15,11 +15,17 @@ class MainActivity : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var runnable: Runnable
     private lateinit var handler: Handler
+    
+    private lateinit var tvPlayed : TextView
+    private  lateinit var tvDue : TextView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         seekBar = findViewById(R.id.sbClapping)
         handler = Handler(Looper.getMainLooper())
+        tvPlayed  = findViewById<TextView>(R.id.tvPlayed)
+        tvDue = findViewById<TextView>(R.id.tvDue)
         val playButton = findViewById<FloatingActionButton>(R.id.fabPlay)
         playButton.setOnClickListener {
             if (mediaPlayer == null) {
@@ -42,6 +48,8 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer = null
             handler.removeCallbacks(runnable)
             seekBar.progress = 0
+            tvPlayed.text = ""
+            tvDue.text = ""
 
         }
     }
@@ -62,8 +70,8 @@ class MainActivity : AppCompatActivity() {
 
 
         })
-        val tvPlayed = findViewById<TextView>(R.id.tvPlayed)
-        val tvDue = findViewById<TextView>(R.id.tvDue)
+        //val tvPlayed = findViewById<TextView>(R.id.tvPlayed)
+        //val tvDue = findViewById<TextView>(R.id.tvDue)
         seekBar.max = mediaPlayer!!.duration
         runnable = Runnable {
             seekBar.progress = mediaPlayer!!.currentPosition
